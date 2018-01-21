@@ -24,7 +24,8 @@
         "php": "^7.1",
         "microsymfony/services-connector": "^1.0",
         "microsymfony/jwt-auth": "^1.1",
-        "symfony/dependency-injection": "^4.0"
+        "symfony/dependency-injection": "^4.0",
+        "symfony/config": "^4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"
