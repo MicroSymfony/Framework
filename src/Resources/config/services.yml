@@ -1,0 +1,10 @@
+parameters:
+
+services:
+    symfony.micro_services.framework.connection:
+        class: MicroSymfony\Framework\Connection
+        arguments:
+            - '@symfony.micro_services.jwt.token_manager'
+            - '@symfony.micro_services.connection'
+        calls:
+            - [setAuthTokenHeader, ['%symfony.micro_services.token_header%']]
