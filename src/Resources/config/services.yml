@@ -8,3 +8,5 @@ services:
             - '@symfony.micro_services.connection'
         calls:
             - [setAuthTokenHeader, ['%symfony.micro_services.token_header%']]
+
+    MicroSymfony\Framework\Connection: '@symfony.micro_services.framework.connection'
