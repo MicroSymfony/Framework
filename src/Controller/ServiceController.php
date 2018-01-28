@@ -18,6 +18,7 @@ class ServiceController implements ContainerAwareInterface
 
     /**
      * @param Verifier $verifier
+     * @required
      */
     public function setVerifier(Verifier $verifier): void
     {
@@ -49,14 +50,16 @@ class ServiceController implements ContainerAwareInterface
             $serviceHeader = $defaultServiceHeader;
         }
 
-        $token = $request->headers->get($tokenHeader);
-        $service = $request->headers->get($serviceHeader);
+        $token = (string) $request->headers->get($tokenHeader);
+        $service = (string) $request->headers->get($serviceHeader);
 
         $result = false;
         try {
             $result = $this->verifier->verify($token, $service);
         } catch (VerificationException $exception) {
             // failed to verify, $result will remain false
+        } catch (\InvalidArgumentException $exception) {
+            // failed to parse token, someone might be hacking, should add logging here
         }
 
         return $result;
