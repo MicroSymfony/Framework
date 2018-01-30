@@ -2,6 +2,7 @@
 
 namespace MicroSymfony\Framework;
 
+use GuzzleHttp\Exception\ClientException;
 use MicroSymfony\Connection\ConnectionAdapters\ConnectionAdapterInterface;
 use MicroSymfony\Framework\Exceptions\ServiceBadResponseException;
 use MicroSymfony\Framework\Exceptions\ServiceErrorException;
@@ -40,12 +41,16 @@ class Connection
 
         try {
             $response = $this->connection->request($method, $endpoint, $params);
-        } catch (\Exception $exception) {
+        } catch (ClientException $exception) {
             if ($useCache && 403 === $exception->getCode()) {
                 $response = $this->request($method, $endpoint, $body, $headers, false);
             } else {
-                throw new ServiceUnavailableException();
+                $data = $exception->getResponse()->getBody()->getContents();
+                $error = json_decode($data, true);
+                throw new ServiceUnavailableException($error['error'] ?? 'Error while connecting to service');
             }
+        } catch (\Exception $exception) {
+            throw new ServiceUnavailableException('Failed to connect to service');
         }
 
         $result = json_decode($response, true);
