@@ -42,7 +42,7 @@ class Connection
             $response = $this->connection->request($method, $endpoint, $params);
         } catch (\Exception $exception) {
             if ($useCache && 403 === $exception->getCode()) {
-                $response = $this->request($method, $endpoint, $body, $headers, true);
+                $response = $this->request($method, $endpoint, $body, $headers, false);
             } else {
                 throw new ServiceUnavailableException();
             }

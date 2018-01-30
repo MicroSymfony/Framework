@@ -36,8 +36,8 @@ class ServiceController implements ContainerAwareInterface
         $defaultServiceHeader = 'X-Service';
         if (null !== $this->container) {
             try {
-                $tokenHeader = $this->container->getParameter('symfony.micro_services.service_header');
-                $serviceHeader = $this->container->getParameter('symfony.micro_services.token_header');
+                $tokenHeader = $this->container->getParameter('symfony.micro_services.token_header');
+                $serviceHeader = $this->container->getParameter('symfony.micro_services.service_header');
             } catch (\InvalidArgumentException $exception) {
                 // custom headers not defined, stick to defaults
             }
