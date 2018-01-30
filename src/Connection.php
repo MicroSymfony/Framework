@@ -50,8 +50,8 @@ class Connection
 
         $result = json_decode($response, true);
 
-        if (empty($result)) {
-            throw new ServiceBadResponseException();
+        if (empty($result) && '[]' !== $response && '{}' !== $response) {
+            throw new ServiceBadResponseException('Malformed service response');
         }
 
         if (isset($result['error'])) {
