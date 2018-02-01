@@ -66,22 +66,22 @@ class Connection
         return $result;
     }
 
-    public function get($endpoint, $headers)
+    public function get($endpoint, $headers = [])
     {
         return $this->request('GET', $endpoint, null, $headers);
     }
 
-    public function post($endpoint, $body, $headers)
+    public function post($endpoint, $body = null, $headers = [])
     {
         return $this->request('POST', $endpoint, $body, $headers);
     }
 
-    public function put($endpoint, $body, $headers)
+    public function put($endpoint, $body = null, $headers = [])
     {
         return $this->request('PUT', $endpoint, $body, $headers);
     }
 
-    public function delete($endpoint, $body, $headers)
+    public function delete($endpoint, $body = null, $headers = [])
     {
         return $this->request('DELETE', $endpoint, $body, $headers);
     }
